@@ -1,29 +1,39 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <h1>직방</h1>
-    <div>
-      <h2>xx원룸</h2>
-      <p>{{ price1 }}만원</p>
+    <div class="black-bg " v-if="isModalOpen === ture">
+      <div class="white-bg">
+        <h4>상세페이지</h4>
+        <p>상세페이지내용임</p>
+        <button @click="isModalOpen = false">닫기</button>
+      </div>
     </div>
-    <div>
-      <h2>xx원룸</h2>
-      <p>{{ price2 }}만원</p>
+    <div class="menu">
+      <a v-for="(menu, index) in menus" :key="index" href="#">{{ menu }}</a>
+    </div>
+    <h1>원룸샵</h1>
+    <button @click="isModalOpen = ture">모달오픈</button>
+    <div v-for="(notice, i) in onroom" :key="i">
+      <img :src="notice.image" />
+      <h2 class="red">{{ notice.title }}</h2>
+      <p>{{ notice.price }}</p>
     </div>
   </div>
 </template>
 
-// 데이터바인딩 이유
-
 <script>
+import data from "./data.js";
 export default {
   name: "App",
   data() {
     return {
-      price1: 200,
-      price2: 30,
+      신고수: [0, 0, 0],
+      products: ["역삼동원룸", "천호동원룸", "마포구원룸"],
+      menus: ["Home", "Product", "About"],
+      isModalOpen: false,
+      onroom: data,
     };
   },
+  methods: {},
   components: {},
 };
 </script>
@@ -35,6 +45,35 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+.menu {
+  background: darkslateblue;
+  padding: 15px;
+  border-radius: 5px;
+}
+.menu a {
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+}
+
+body {
+  margin: 0;
+}
+div {
+  box-sizing: border-box;
+}
+.black-bg {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  padding: 20px;
+}
+.white-bg {
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
 }
 </style>

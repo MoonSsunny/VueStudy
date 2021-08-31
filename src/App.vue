@@ -1,40 +1,71 @@
 <template>
   <div id="app">
-    <div class="black-bg " v-if="isModalOpen === ture">
-      <div class="white-bg">
-        <h4>상세페이지</h4>
-        <p>상세페이지내용임</p>
-        <button @click="isModalOpen = false">닫기</button>
-      </div>
-    </div>
+    <Modal
+      @closeModal="isModalOpen = false"
+      :onroom="onroom"
+      :isClick="isClick"
+      :isModalOpen="isModalOpen"
+    />
     <div class="menu">
-      <a v-for="(menu, index) in menus" :key="index" href="#">{{ menu }}</a>
+      <a v-for="(lists, i) in list" :key="i" href="#">{{ lists }}</a>
     </div>
-    <h1>원룸샵</h1>
-    <button @click="isModalOpen = ture">모달오픈</button>
-    <div v-for="(notice, i) in onroom" :key="i">
-      <img :src="notice.image" />
+    <Discount />
+    <!-- <div
+      v-for="(notice, i) in onroom"
+      :key="i"
+      @click="
+        isModalOpen = ture;
+        isClick = i;
+      "
+    >
+      <img :src="notice.image" class="onroom_img" />
       <h2 class="red">{{ notice.title }}</h2>
-      <p>{{ notice.price }}</p>
-    </div>
+      <p>{{ notice.price }}원</p>
+    </div> -->
+    <button @click="priceSort">가격순 정렬</button>
+    <button @click="sortBack">되돌리기</button>
+    <Card
+      @openModal="
+        isModalOpen = true;
+        isClick = $event;
+      "
+      :onroom="onroom[i]"
+      v-for="(room, i) in onroom"
+      :key="i"
+    />
   </div>
 </template>
 
 <script>
 import data from "./data.js";
+import Discount from "./Discount.vue";
+import Modal from "./Modal.vue";
+import Card from "./Card.vue";
+
 export default {
   name: "App",
   data() {
     return {
-      신고수: [0, 0, 0],
-      products: ["역삼동원룸", "천호동원룸", "마포구원룸"],
-      menus: ["Home", "Product", "About"],
       isModalOpen: false,
+      onroomOriginal: [...data],
       onroom: data,
+      isClick: 0,
+      list: ["home", "price", "about"],
     };
   },
-  methods: {},
-  components: {},
+  methods: {
+    priceSort(){
+      this.onroom.sort((a,b)=>b.price-a.price)
+    },
+    sortBack(){
+      this.onroom = [...this.onroomOriginal];
+    }
+  },
+  components: {
+    Discount,
+    Modal,
+    Card,
+  },
 };
 </script>
 
@@ -75,5 +106,9 @@ div {
   background: white;
   border-radius: 8px;
   padding: 20px;
+}
+.onroom_img {
+  width: 400px;
+  border-radius: 8px;
 }
 </style>

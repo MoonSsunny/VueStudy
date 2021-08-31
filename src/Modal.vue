@@ -24,6 +24,12 @@ export default {
       month: 1,
     };
   },
+  beforeUpdate(){
+    if (this.month ==2 ){
+      alert('2개월 이상은 불가합니다 ')
+      this.month = 3;
+    }
+  },
   watch: {
     month(data) {
       data >= 13 ? alert("13이상은 불가합니다") : null;

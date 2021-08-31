@@ -51,6 +51,7 @@ export default {
       onroom: data,
       isClick: 0,
       list: ["home", "price", "about"],
+      showDiscount: true,
     };
   },
   methods: {
@@ -61,6 +62,7 @@ export default {
       this.onroom = [...this.onroomOriginal];
     }
   },
+
   components: {
     Discount,
     Modal,
